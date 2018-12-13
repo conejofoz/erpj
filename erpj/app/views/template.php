@@ -18,7 +18,9 @@
         <?php include "menu.php" ?>;
         <section>
             <div class="conteudo">
-                <?php include "home.php" ?>;
+                <div class="base-centro">
+                    <?php $this->load($view, $viewData) ?>;
+                </div>
             </div>
         </section>
     </body>
