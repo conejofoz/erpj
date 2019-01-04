@@ -4,10 +4,10 @@
                     <ul class="sessao base_user">
                         <a href="<?php echo URL_BASE ?>">
                             <div class="cel3">
-                                <div class="thumb"><img src="<?php echo URL_BASE ?>assets/img/foto01.png"></div>
+                                <div class="thumb"><img src="<?php echo URL_BASE ?>assets/img/foto01.jpg"></div>
                             </div>
                             <div class="cel9">
-                                <span>Jailton Sousa nascimento</span>
+                                <span>Silvio Coelho</span>
                                 <small>Admin</small>
                                 <small class="online">online</small>
                             </div>

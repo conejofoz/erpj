@@ -22,6 +22,18 @@ class Categoria extends Model{
         parent::__construct();
     }
     
+    public function getCategoria($id){
+        $resultado = array();
+        $sql = "SELECT * FROM categoria WHERE id_categoria = :id";
+        $qry = $this->db->prepare($sql);
+        $qry->bindValue(":id", $id);
+        $qry->execute();
+        if($qry->rowCount() > 0){
+            $resultado = $qry->fetch(\PDO::FETCH_OBJ);
+        }
+        return $resultado;
+    }
+    
     
     public function lista(){
         $sql = "SELECT * FROM categoria";
@@ -42,5 +54,29 @@ class Categoria extends Model{
        $sql->bindValue(":menu", $menu);
        $sql->execute();
        return $this->db->lastInsertId();
+    }
+    
+    public function editar($id, $categoria, $ativo, $menu){
+        $sql = "UPDATE categoria SET "
+                . "categoria = :categoria, "
+                . "ativo_categoria = :ativo, "
+                . "mostrar_no_menu = :menu "
+                . "WHERE id_categoria = :id";
+        $qry = $this->db->prepare($sql);
+        $qry->bindValue(":categoria", $categoria);
+        $qry->bindValue(":ativo", $ativo);
+        $qry->bindValue(":menu", $menu);
+        $qry->bindValue("id", $id);
+        $qry->execute();
+    }
+    
+    public function delete($id){
+        $sql = "DELETE FROM categoria WHERE id_categoria = :id_categoria";
+        $qry = $this->db->prepare($sql);
+        $qry->bindValue(":id_categoria", $id);
+        $qry->execute();
+        if($qry->rowCount() > 0){
+            return 'ok';
+        }
     }
 }

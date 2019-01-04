@@ -64,27 +64,27 @@
                             <tr>
                                 <td align="left">19/05/17</td>
                                 <td align="left">Pagamento do kit minnie mouse</td>
-                                <td align="left">Jairo Sousa do Nascimento</td>
+                                <td align="left">Fulano Sousa do Nascimento</td>
                             </tr>
                             <tr>
                                 <td align="left">19/05/17</td>
                                 <td align="left">Pagamento do kit minnie mouse</td>
-                                <td align="left">Jairo Sousa do Nascimento</td>
+                                <td align="left">Fulano Sousa do Nascimento</td>
                             </tr>
                             <tr>
                                 <td align="left">19/05/17</td>
                                 <td align="left">Pagamento do kit minnie mouse</td>
-                                <td align="left">Jairo Sousa do Nascimento</td>
+                                <td align="left">Fulano Sousa do Nascimento</td>
                             </tr>
                             <tr>
                                 <td align="left">19/05/17</td>
                                 <td align="left">Pagamento do kit minnie mouse</td>
-                                <td align="left">Jairo Sousa do Nascimento</td>
+                                <td align="left">Fulano Sousa do Nascimento</td>
                             </tr>
                             <tr>
                                 <td align="left">19/05/17</td>
                                 <td align="left">Pagamento do kit minnie mouse</td>
-                                <td align="left">Jairo Sousa do Nascimento</td>
+                                <td align="left">Fulano Sousa do Nascimento</td>
                             </tr>								
                         </tbody>
                     </table>	
@@ -282,7 +282,7 @@
 
 <div class="base-rodape">
     <div class="conteudo">
-        <p>Direitos reservados mjailton.com.br</p>
+        <p>GURI WEB - SILVIO COELHO</p>
     </div>
 </div>	
 

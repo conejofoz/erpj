@@ -2,6 +2,8 @@
 require 'config/config.php';
 require 'app/core/Core.php';
 require 'vendor/autoload.php';
+require 'app/helper/helper.php';
+date_default_timezone_set("America/Sao_paulo");
 
 $core = new Core;
 $core->run();

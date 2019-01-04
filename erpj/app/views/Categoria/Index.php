@@ -47,9 +47,9 @@
                                 <td align="center"><?php echo $categoria->ativo_categoria ?></td>
                                 <td align="center"><?php echo $categoria->mostrar_no_menu ?></td>
                                 <td align="center">
-                                    <a href="frm_categoria.html" class="btn editar">Editar</a>
+                                    <a href="<?php echo URL_BASE . "categoria/edit/" . $categoria->id_categoria ?>" class="btn editar">Editar</a>
                                     <a href="detalhe_categoria.html" class="btn detalhe">Detalhes</a>
-                                    <a href="excluir_categoria.html" class="btn excluir">Excluir</a>
+                                    <a href="<?php echo URL_BASE . "categoria/excluir/" . $categoria->id_categoria ?>" class="btn excluir">Excluir</a>
                                 </td>
                             </tr>	
                         <?php } ?>
