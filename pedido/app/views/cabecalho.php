@@ -2,7 +2,7 @@
 		<div class="conteudo">
 			<h1 class="logo">
 				<span class="icone menucat menu-anchor">Menu</span>		
-				<a href="<?php echo URL_BASE ?>index.html"> ERP WEB</a>						
+				<a href="<?php echo URL_BASE . "pedido" ?>"> ERP WEB</a>						
 			
 			 </h1>
 			<ul class="menu-topo">

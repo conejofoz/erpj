@@ -3,7 +3,7 @@
         <div class="caixa">
             <h1 class="titulo"><strong>Pedido</strong> <span>Veja seus pedidos abaixo</span></h1>
 
-            <a href="criar_pedido.html" class="btn add">+ Adicionar Pedido</a>	
+            <a href="<?php echo URL_BASE . "pedido" ?>" class="btn add">+ Adicionar Pedido</a>	
         </div>
         <div class="caixa-border">
             <div  class="caixa alt">
