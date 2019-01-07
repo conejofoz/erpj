@@ -5,7 +5,7 @@
             <h1 class="titulo"><strong>Pedidos</strong> <span>Faça seu controle financeiro de saídas e fique sempre atento com o balanço finaneciero de sua empresa</span></h1>
         </div>
 
-        <form action="" method="post">
+        <form id="frmPedido" action="" method="post">
             <div class="rows caixa-border">
                 <div class="rows">
                     <div class="caixa">
@@ -91,9 +91,10 @@
                         </div>
                     </div>
 
-                    </form>	
+                    	
                 </div>
             </div>
+            </form>
 
 
     </div>

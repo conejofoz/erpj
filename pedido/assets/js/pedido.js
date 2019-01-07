@@ -1,4 +1,11 @@
 $(function () {
+    /*Cancelar submit do formulario temporariamente*/
+    $("#frmPedido").submit(function(){
+        return false;
+    });
+    
+    
+    
     $("#produto").on("keyup", function () {
 
         var q = $(this).val();
@@ -46,6 +53,9 @@ $(function () {
         });
     });
 });
+
+
+
 function selecionarProduto(umProduto) {
     var id = $(umProduto).attr('data-id');
     var produto = $(umProduto).attr('data-produto');
@@ -65,18 +75,33 @@ function selecionarProduto(umProduto) {
 
 
 function inserirItens() {
+    
     var id = $("#id_produto").val();
     var produto = $("#produto").val();
     var preco = $("#preco").val();
     var qtde = $("#qtde").val();
+    var subtotal = preco * qtde;
+    
     var tr = "<tr>" +
             "<td>1</td>" +
             "<td>" + id + "</td>" +
             "<td>" + produto + "</td>" +
             "<td>R$ " + preco + "</td>" +
-            '<td><input type="number" name="quant[' + id + '"  class="p_quant" value="'+qtde+'" ></td><td class="subtotal">R$ 100.00</td>' +
+            '<td><input type="number" name="quant[' + id + '"  class="p_quant" value="'+qtde+'" >' +
+            '<td class="subtotal">R$ ' + subtotal + '</td>' +
             '<td><a href=""  class="btn">Excluir</a></td>' +
             "</tr>";
     $("#lista_itens").append(tr);
+    
+    limpar();
+}
+
+
+function limpar(){
+    $("#id_produto").val("");
+    $("#produto").val("");
+    $("#qtde").val("");
+    $("#preco").val("");
+    $("#produto").focus();
 }
 
