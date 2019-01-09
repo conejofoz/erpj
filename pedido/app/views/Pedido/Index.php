@@ -9,29 +9,29 @@
             <div class="rows caixa-border">
                 <div class="rows">
                     <div class="caixa">
-                        <span class="titulo"><strong>Dados do Pedido</strong></span>
+                        <span class="titulo"><strong>Dados do Pedido Nº <?php echo $pedido->id_pedido ?></strong></span>
 
                         <div class="dados-pedido">									
                             <div class="rows box_op">
                                 <div class="cel6">
                                     <i class="ico cliente"></i>
-                                    <small><?php echo $_SESSION["clienteLogado"]->cliente ?></small>
+                                    <small><?php echo $pedido->cliente ?></small>
                                     <h3 id="cli">Selecione o cliente</h3>
                                 </div>
                                 <div class="cel2">
                                     <i class="ico data"></i>
                                     <small>Data</small>
-                                    <h3><?php echo date("d/m/Y") ?></h3>
+                                    <h3><?php echo $pedido->data_pedido ?></h3>
                                 </div>
                                 <div class="cel2">
                                     <i class="ico hora"></i>
                                     <small>Hora</small>
-                                    <h3><?php echo date("h:m:i")?></h3>
+                                    <h3><?php echo $pedido->hora_pedido ?></h3>
                                 </div>
                                 <div class="cel2">
                                     <i class="ico total"></i>
                                     <small>total</small>
-                                    <h3 id="total">R$ 0,00</h3>
+                                    <h3 id="total">R$ <?php echo $pedido->total ?></h3>
                                 </div>
 
                             </div>		
@@ -45,8 +45,8 @@
                                 <div class="caixa-inputs">
                                     <div class="cel6">
                                         <small>Titulo</small>
-                                        <input type="text" id="produto" data-type="localizar_produto"  />
-                                        
+                                        <input type="text" autocomplete="off" id="produto" data-type="localizar_produto"  />
+
                                     </div>								
                                     <div class="cel2">
                                         <small>Valor</small>
@@ -79,8 +79,18 @@
                                         <th width="15%" align="center">Excluir</th>
                                     </tr>
                                 </thead>
-                                <tbody id="lista_itens">	
-                                    
+                                <tbody id="lista_itens">
+                                    <?php foreach ($itens as $item){ ?>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><?php echo $item->id_produto ?></td>
+                                        <td><?php echo $item->produto ?></td>
+                                        <td>R$ <?php echo $item->valor ?></td>
+                                        <td><input type="number" name="quant[' + id + ']"  class="p_quant" value="' . $item->qtde . '" data-preco="' $item->valor '" ></td>' +
+                                        <td class="subtotal">R$ ' + subtotal + '</td>' +
+                                        <td><a href="javascript:;" onclick="removeLinha(this)"  class="btn">Excluir</a></td>' +
+                                    </tr>
+                                    <?php } ?>
                                 </tbody>
                             </table>								
                             <div class="base-botoes" id="botoes" style="">
@@ -91,10 +101,10 @@
                         </div>
                     </div>
 
-                    	
+
                 </div>
             </div>
-            </form>
+        </form>
 
 
     </div>

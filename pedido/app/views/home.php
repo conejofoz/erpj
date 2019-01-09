@@ -32,6 +32,7 @@
             <div class="base-lista">
                 <div class="caixa alt">
                     <div class="titulo_p"><strong></strong><p><i class="icone-p"></i><b>LISTA DE PEDIDOS</b></p></div>
+                    <?php if($pedidos){ ?>
 
                     <div class="limpar">&nbsp;</div>
                     <table width="100%" cellpadding="0" cellspacing="0" class="tabela">			
@@ -47,26 +48,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach ($pedidos as $pedido){?>
 
                             <tr class="ativo">
-                                <td align="center">1</td>
-                                <td>Manoel Jailton </td>
-                                <td align="center">2018-02-20</td>
-                                <td align="center">R$ 200.00</td>
+                                <td align="center"><?php echo $pedido->id_pedido ?></td>
+                                <td><?php echo $pedido->cliente ?></td>
+                                <td align="center"><?php echo $pedido->data_pedido ?></td>
+                                <td align="center"><?php echo $pedido->total ?></td>
 
-                                <td align="center">N</td>
+                                <td align="center"><?php echo $pedido->baixado ?></td>
                                 <td align="center"><a href="#" class="btn detalhe">Detalhes</a></td>
                             </tr>
+                           <?php }?>
 
-                            <tr class="ativo">
-                                <td align="center">2</td>
-                                <td>Manoel Jailton </td>
-                                <td align="center">2018-05-26</td>
-                                <td align="center">R$ 0.00</td>
-
-                                <td align="center">N</td>
-                                <td align="center"><a href="#" class="btn detalhe">Detalhes</a></td>
-                            </tr>
 
 
 
@@ -85,6 +79,10 @@
                         <li><a href="">5</a></li>
                         <li><a href="">Próximo</a></li>
                     </ul>
+                    <?php } else {
+                        echo "Nenhum pedido encontrado!";
+                    } ?>
+                    
                 </div>
             </div>
         </div>

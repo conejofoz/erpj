@@ -1,11 +1,11 @@
 $(function () {
     /*Cancelar submit do formulario temporariamente*/
-    $("#frmPedido").submit(function(){
+    $("#frmPedido").submit(function () {
         return false;
     });
-    
-    
-    
+
+
+
     $("#produto").on("keyup", function () {
 
         var q = $(this).val();
@@ -75,33 +75,71 @@ function selecionarProduto(umProduto) {
 
 
 function inserirItens() {
-    
+
     var id = $("#id_produto").val();
     var produto = $("#produto").val();
     var preco = $("#preco").val();
     var qtde = $("#qtde").val();
     var subtotal = preco * qtde;
-    
-    var tr = "<tr>" +
-            "<td>1</td>" +
-            "<td>" + id + "</td>" +
-            "<td>" + produto + "</td>" +
-            "<td>R$ " + preco + "</td>" +
-            '<td><input type="number" name="quant[' + id + '"  class="p_quant" value="'+qtde+'" >' +
-            '<td class="subtotal">R$ ' + subtotal + '</td>' +
-            '<td><a href=""  class="btn">Excluir</a></td>' +
-            "</tr>";
-    $("#lista_itens").append(tr);
-    
-    limpar();
+
+    //verificar se o item já está no pedido antes de inserir
+    if($('input[name="quant['+id+']"]').length==0){
+        
+        console.log("Nome do campo" + $('input[name="quant['+id+']"'));
+
+        var tr = "<tr>" +
+                "<td>1</td>" +
+                "<td>" + id + "</td>" +
+                "<td>" + produto + "</td>" +
+                "<td>R$ " + preco + "</td>" +
+                '<td><input type="number" name="quant[' + id + ']"  class="p_quant" value="' + qtde + '" data-preco="' + preco + '" ></td>' +
+                '<td class="subtotal">R$ ' + subtotal + '</td>' +
+                '<td><a href="javascript:;" onclick="removeLinha(this)"  class="btn">Excluir</a></td>' +
+                "</tr>";
+        $("#lista_itens").append(tr);
+
+        limpar();
+        atualizaTotal();
+
+    } else {
+        Swal('Atenção!','Este ítem já está no pedido! por favor altere a quantidade','error');
+        //alert('Este ítem já está no pedido! por favor altere a quantidade');
+        $('input[name="quant['+id+']"]').focus();
+        
+    }
 }
 
 
-function limpar(){
+function limpar() {
     $("#id_produto").val("");
     $("#produto").val("");
     $("#qtde").val("");
     $("#preco").val("");
     $("#produto").focus();
+}
+
+
+function atualizaTotal() {
+    var total = 0;
+    var totalItens = $(".p_quant").length;
+
+    for (var i = 0; i < totalItens; i++) {
+        //pegar o elemento da linha 
+        var linha = $(".p_quant").eq(i);
+        var preco = linha.attr("data-preco");
+        var qtde = linha.val();
+        var subtotal = parseInt(qtde) * preco;
+        total += subtotal;
+
+    }
+    console.log("total: " + total);
+    $("#total").html(total.toFixed(2).replace(".", ","));
+    //$("#total").html(total.toFixed(2));
+}
+
+
+function removeLinha(umaLinha) {
+    $(umaLinha).closest('tr').remove();
+    atualizaTotal();
 }
 
