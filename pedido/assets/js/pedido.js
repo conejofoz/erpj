@@ -1,4 +1,41 @@
 $(function () {
+
+    $("#btnInserir").on("click", function () {
+        var id_pedido = $("#id_pedido").html();
+        var id_produto = $("#id_produto").val();
+        var produto = $("#produto").val();
+        var preco = $("#preco").val();
+        var qtde = $("#qtde").val();
+        var subtotal = preco * qtde;
+        $.ajax({
+            url: base_url + "item/inserir",
+            type: "POST",
+            data: {id_pedido: id_pedido, id_produto: id_produto, qtde: qtde, preco: preco},
+            dataType: 'json',
+            success: function (data) {
+
+                console.log(data);
+
+                if (data.resultado == 0) {
+                    Swal('Atenção!', data.mensagem, 'error');
+                    return false;
+                }
+                if (data.resultado > 0) {
+                    inserirItens();
+                    atualizaTotal();
+                    console.log(data.mensagem);
+                }
+
+
+            },
+            error: function () {
+
+            }
+        });
+    });
+
+
+
     /*Cancelar submit do formulario temporariamente*/
     $("#frmPedido").submit(function () {
         return false;
@@ -75,7 +112,7 @@ function selecionarProduto(umProduto) {
 
 
 function inserirItens() {
-
+    var id_pedido = $("#id_pedido").html();
     var id = $("#id_produto").val();
     var produto = $("#produto").val();
     var preco = $("#preco").val();
@@ -83,18 +120,18 @@ function inserirItens() {
     var subtotal = preco * qtde;
 
     //verificar se o item já está no pedido antes de inserir
-    if($('input[name="quant['+id+']"]').length==0){
-        
-        console.log("Nome do campo" + $('input[name="quant['+id+']"'));
+    if ($('input[name="quant[' + id + ']"]').length == 0) {
+
+        console.log("Nome do campo" + $('input[name="quant[' + id + ']"'));
 
         var tr = "<tr>" +
                 "<td>1</td>" +
                 "<td>" + id + "</td>" +
                 "<td>" + produto + "</td>" +
                 "<td>R$ " + preco + "</td>" +
-                '<td><input type="number" name="quant[' + id + ']"  class="p_quant" value="' + qtde + '" data-preco="' + preco + '" ></td>' +
+                '<td><input type="number" name="quant[' + id + ']"  class="p_quant" value="' + qtde + '" data-preco="' + preco + '" data-id-produto="' + id + '" onchange="atualizaQtdeBanco(this)" ></td>' +
                 '<td class="subtotal">R$ ' + subtotal + '</td>' +
-                '<td><a href="javascript:;" onclick="removeLinha(this)"  class="btn">Excluir</a></td>' +
+                '<td><a href="javascript:;" data-idProduto="' + id + '" data-idPedido="' + id_pedido + '" onclick="removeLinha(this)"  class="btn">Excluir</a></td>' +
                 "</tr>";
         $("#lista_itens").append(tr);
 
@@ -102,10 +139,10 @@ function inserirItens() {
         atualizaTotal();
 
     } else {
-        Swal('Atenção!','Este ítem já está no pedido! por favor altere a quantidade','error');
+        Swal('Atenção!', 'Este ítem já está no pedido! por favor altere a quantidade', 'error');
         //alert('Este ítem já está no pedido! por favor altere a quantidade');
-        $('input[name="quant['+id+']"]').focus();
-        
+        $('input[name="quant[' + id + ']"]').focus();
+
     }
 }
 
@@ -117,6 +154,44 @@ function limpar() {
     $("#preco").val("");
     $("#produto").focus();
 }
+
+
+
+
+
+
+function removeLinha(umaLinha) {
+    var idpedido = $(umaLinha).attr("data-idPedido");
+    var idproduto = $(umaLinha).attr("data-idProduto");
+    $.ajax({
+        url: base_url + "item/excluir/" + idpedido + "/" + idproduto,
+        type: "GET",
+        data: {},
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            $(umaLinha).closest('tr').remove();
+            atualizaTotal();
+            Swal('Atenção!', 'Item removido do pedido', 'success');
+        },
+        error: function () {
+            console.log("Erro ao excluir o item:");
+        }
+    });
+
+
+}
+
+
+
+function atualizaSubtotal(obj) {
+    var qtde = $(obj).val();
+    var preco = $(obj).attr("data-preco");
+    var subtotal = parseInt(qtde) * preco;
+    $(obj).closest('tr').find(".subtotal").html(subtotal);
+    atualizaTotal();
+}
+
 
 
 function atualizaTotal() {
@@ -135,11 +210,78 @@ function atualizaTotal() {
     console.log("total: " + total);
     $("#total").html(total.toFixed(2).replace(".", ","));
     //$("#total").html(total.toFixed(2));
+    
+    var idPedido = $("#id_pedido").html();
+    atualizaTotalBanco(total, idPedido);
+    
 }
 
 
-function removeLinha(umaLinha) {
-    $(umaLinha).closest('tr').remove();
-    atualizaTotal();
+
+function atualizaTotalBanco(totalPedido, idPedido){
+    $.ajax({
+        url: base_url + "pedido/atualizaTotalBanco",
+        type: "POST",
+        data: {
+            idPedido: idPedido,
+            totalPedido: totalPedido
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.resultado == 0) {
+                Swal('Atenção!', data.mensagem, 'error');
+                return false;
+            }
+            
+            console.log(data.mensagem);
+            
+        },
+        error: function () {
+
+        }
+    });
+    
+    
+    
+}
+
+
+
+function atualizaQtdeBanco(obj) {
+    var idPedido = $("#id_pedido").html();
+    var idProduto = $(obj).attr("data-id-produto");
+    var qtde = $(obj).val();
+    var preco = $(obj).attr("data-preco");
+    
+    if(qtde <= 0){
+        $(obj).val('1');
+        qtde = 1;
+    }
+
+    console.log(idPedido, idProduto, qtde, preco);
+
+    $.ajax({
+        url: base_url + "item/atualizaQtdeBanco",
+        type: "POST",
+        data: {
+            idPedido: idPedido,
+            idProduto: idProduto,
+            qtde: qtde
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.resultado == 0) {
+                Swal('Atenção!', data.mensagem, 'error');
+                return false;
+            }
+            
+            atualizaSubtotal($(obj));
+            //atualizaTotal();
+
+        },
+        error: function () {
+
+        }
+    });
 }
 

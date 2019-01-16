@@ -12,6 +12,11 @@
         <script type="text/javascript" src="<?php echo URL_BASE ?>assets/js/sweetalert2.min.js"></script>
         <script type="text/javascript" src="<?php echo URL_BASE ?>assets/js/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="<?php echo URL_BASE ?>assets/js/js.js"></script>
+        
+        <script>
+            var base_url = '<?php echo URL_BASE ?>';
+        </script>
+        
 
 
 

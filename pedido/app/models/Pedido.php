@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use PDOException;
 use app\core\Model;
 
 class Pedido extends Model {
@@ -32,8 +33,8 @@ class Pedido extends Model {
     public function novoPedido($idCliente) {
 
         try {
-            $data = date('d/m/Y');
-            $hora = date('h:i:s');
+            $data = date('Y-m-d');
+            $hora = date('H:i:s');
             //$sql = "INSERT INTO pedido VALUES(id_cliente, data_pedido, hora_pedido) :idCliente, :data, :hora";
             $sql = "INSERT INTO pedido (id_cliente, data_pedido, hora_pedido) VALUES(:idCliente, :data, :hora)";
             $sql = $this->db->prepare($sql);
@@ -57,6 +58,19 @@ class Pedido extends Model {
         $sql->execute();
         $resultado = $sql->fetch(\PDO::FETCH_OBJ);
         return $resultado;
+    }
+
+    public function atualizaTotalBanco($totalPedido, $idPedido) {
+        try {
+            $sql = "UPDATE pedido SET total = :totalPedido WHERE id_pedido = :idPedido";
+            $qry = $this->db->prepare($sql);
+            $qry->bindValue(":totalPedido", $totalPedido);
+            $qry->bindValue(":idPedido", $idPedido);
+            $qry->execute();
+            return 'ok';
+        } catch (PDOException $exc) {
+            return $exc->getMessage();
+        }
     }
 
 }

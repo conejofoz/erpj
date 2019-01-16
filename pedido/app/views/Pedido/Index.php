@@ -9,7 +9,7 @@
             <div class="rows caixa-border">
                 <div class="rows">
                     <div class="caixa">
-                        <span class="titulo"><strong>Dados do Pedido Nº <?php echo $pedido->id_pedido ?></strong></span>
+                        <span class="titulo"><strong>Dados do Pedido Nº <span id="id_pedido"><?php echo $pedido->id_pedido ?></span></strong></span>
 
                         <div class="dados-pedido">									
                             <div class="rows box_op">
@@ -58,7 +58,8 @@
                                     </div>						 
                                     <div class="cel2">
                                         <input type="hidden" id="id_produto" name="id_produto">
-                                        <input type="button" class="btn inserir" value="Inserir " name="" onclick="inserirItens()">
+                                        <!--<input type="button" class="btn inserir" value="Inserir " name="" onclick="inserirItens()">-->
+                                        <input type="button" class="btn inserir" value="Inserir " name="btnInserir" id="btnInserir" >
                                     </div>
                                 </div>
                             </div>
@@ -80,17 +81,20 @@
                                     </tr>
                                 </thead>
                                 <tbody id="lista_itens">
-                                    <?php foreach ($itens as $item){ ?>
+                                    
+                                    <?php 
+                                    $i = 1; 
+                                    foreach ($itens as $item){ ?>
                                     <tr>
-                                        <td>1</td>
+                                        <td><?php echo $i ?></td>
                                         <td><?php echo $item->id_produto ?></td>
-                                        <td><?php echo $item->produto ?></td>
+                                        <td><?php echo utf8_encode($item->produto) ?></td>
                                         <td>R$ <?php echo $item->valor ?></td>
-                                        <td><input type="number" name="quant[' + id + ']"  class="p_quant" value="' . $item->qtde . '" data-preco="' $item->valor '" ></td>' +
-                                        <td class="subtotal">R$ ' + subtotal + '</td>' +
-                                        <td><a href="javascript:;" onclick="removeLinha(this)"  class="btn">Excluir</a></td>' +
+                                        <td><input type="number" name="quant[<?php echo $item->id_produto ?>]"  class="p_quant" value="<?php echo $item->qtde ?>" data-preco="<?php echo $item->valor ?>" onchange="atualizaSubtotal(this)" ></td>
+                                        <td class="subtotal">R$ <?php echo $item->valor*$item->qtde ?></td>
+                                        <td><a href="javascript:;" data-idProduto="<?php echo $item->id_produto ?>" data-idPedido="<?php echo $item->id_pedido ?>" onclick="removeLinha(this)"  class="btn">Excluir</a></td>
                                     </tr>
-                                    <?php } ?>
+                                    <?php $i++; } ?>
                                 </tbody>
                             </table>								
                             <div class="base-botoes" id="botoes" style="">
