@@ -90,7 +90,7 @@
                                         <td><?php echo $item->id_produto ?></td>
                                         <td><?php echo utf8_encode($item->produto) ?></td>
                                         <td>R$ <?php echo $item->valor ?></td>
-                                        <td><input type="number" name="quant[<?php echo $item->id_produto ?>]"  class="p_quant" value="<?php echo $item->qtde ?>" data-preco="<?php echo $item->valor ?>" onchange="atualizaSubtotal(this)" ></td>
+                                        <td><input type="number" name="quant[<?php echo $item->id_produto ?>]"  class="p_quant" value="<?php echo $item->qtde ?>" data-preco="<?php echo $item->valor ?>" data-id-produto="<?php echo $item->id_produto ?>" onchange="atualizaSubtotal(this)" ></td>
                                         <td class="subtotal">R$ <?php echo $item->valor*$item->qtde ?></td>
                                         <td><a href="javascript:;" data-idProduto="<?php echo $item->id_produto ?>" data-idPedido="<?php echo $item->id_pedido ?>" onclick="removeLinha(this)"  class="btn">Excluir</a></td>
                                     </tr>
@@ -101,6 +101,7 @@
                                 <button class="btn limpar" >limpar</button>
                                 <button class="btn cancelar" >cancelar</button>
                                 <input type="submit"  class="btn finalizar" value="Finalizar Venda" />
+                                <button class="btn finalizar" id="btn_finalizar">Finalizar Venda</button>
                             </div>
                         </div>
                     </div>

@@ -89,7 +89,36 @@ $(function () {
 
         });
     });
-});
+    
+    
+    $("#btn_finalizar").on("click", function(){
+        var arrayProdutos = [];
+        var listaProdutos = [];
+        for(var i = 0; i< $(".p_quant").length; i++){
+            var linha       = $(".p_quant").eq(i);
+            var idProduto   = linha.attr('data-id-produto');
+            var qtde        = linha.val();
+            var preco       = linha.attr('data-preco');
+            console.log("CODIGO: " + idProduto + " QUANTIDADE: " + qtde);
+            
+            //arrayProdutos = [ idProduto, qtde, preco]
+            arrayProdutos = [ {'idProduto' : idProduto, 'qtde' : qtde, 'preco' : preco }]
+            listaProdutos.push(arrayProdutos);
+            
+        }
+        console.log("====================================================");
+        for(var j in listaProdutos){
+            console.log(listaProdutos[j]);
+        }
+        console.log("====================================================");
+        console.log("====================================================");
+        console.log("====================================================");
+        console.log(listaProdutos);
+        
+    })
+    
+    
+});//final jquery
 
 
 
