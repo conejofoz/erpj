@@ -89,35 +89,42 @@ $(function () {
 
         });
     });
-    
-    
-    $("#btn_finalizar").on("click", function(){
-        var arrayProdutos = [];
-        var listaProdutos = [];
-        for(var i = 0; i< $(".p_quant").length; i++){
-            var linha       = $(".p_quant").eq(i);
-            var idProduto   = linha.attr('data-id-produto');
-            var qtde        = linha.val();
-            var preco       = linha.attr('data-preco');
-            console.log("CODIGO: " + idProduto + " QUANTIDADE: " + qtde);
-            
-            //arrayProdutos = [ idProduto, qtde, preco]
-            arrayProdutos = [ {'idProduto' : idProduto, 'qtde' : qtde, 'preco' : preco }]
-            listaProdutos.push(arrayProdutos);
-            
+
+
+    $("#btn_finalizar").on("click", function () {
+        var idPedido = $("#id_pedido").html();
+        var itemProduto = {};
+        var listaItens = [];
+        for (var i = 0; i < $(".p_quant").length; i++) {
+            var linha = $(".p_quant").eq(i);
+            var idProduto = linha.attr('data-id-produto');
+            var qtde = linha.val();
+            var preco = linha.attr('data-preco');
+            //console.log("CODIGO: " + idProduto + " QUANTIDADE: " + qtde);
+            itemProduto = {idPedido:idPedido, idProduto: idProduto, qtde: qtde, preco: preco};
+            listaItens.push(itemProduto);
         }
-        console.log("====================================================");
-        for(var j in listaProdutos){
-            console.log(listaProdutos[j]);
-        }
-        console.log("====================================================");
-        console.log("====================================================");
-        console.log("====================================================");
-        console.log(listaProdutos);
-        
+
+        $.ajax({
+            url: base_url + "pedido/finalizarPedido",
+            type: "POST",
+            data: { listaItens },
+            dataType: "json",
+            success: function (data) {
+                if (data.resultado == 0) {
+                    Swal('Atenção!', data.mensagem, 'error');
+                    return false;
+                }
+                //console.log(data.mensagem);
+                console.log(data);
+            },
+            error: function () {
+            }
+        });
+
     })
-    
-    
+
+
 });//final jquery
 
 
@@ -239,15 +246,15 @@ function atualizaTotal() {
     console.log("total: " + total);
     $("#total").html(total.toFixed(2).replace(".", ","));
     //$("#total").html(total.toFixed(2));
-    
+
     var idPedido = $("#id_pedido").html();
     atualizaTotalBanco(total, idPedido);
-    
+
 }
 
 
 
-function atualizaTotalBanco(totalPedido, idPedido){
+function atualizaTotalBanco(totalPedido, idPedido) {
     $.ajax({
         url: base_url + "pedido/atualizaTotalBanco",
         type: "POST",
@@ -261,17 +268,17 @@ function atualizaTotalBanco(totalPedido, idPedido){
                 Swal('Atenção!', data.mensagem, 'error');
                 return false;
             }
-            
+
             console.log(data.mensagem);
-            
+
         },
         error: function () {
 
         }
     });
-    
-    
-    
+
+
+
 }
 
 
@@ -281,8 +288,8 @@ function atualizaQtdeBanco(obj) {
     var idProduto = $(obj).attr("data-id-produto");
     var qtde = $(obj).val();
     var preco = $(obj).attr("data-preco");
-    
-    if(qtde <= 0){
+
+    if (qtde <= 0) {
         $(obj).val('1');
         qtde = 1;
     }
@@ -303,7 +310,7 @@ function atualizaQtdeBanco(obj) {
                 Swal('Atenção!', data.mensagem, 'error');
                 return false;
             }
-            
+
             atualizaSubtotal($(obj));
             //atualizaTotal();
 

@@ -8,7 +8,7 @@ class Item extends Model {
 
     public function listaItens($idPedido) {
         try {
-            $sql = "SELECT * FROM item i, produto p WHERE i.id_pedido=:idPedido AND i.id_produto = p.id_produto ";
+            $sql = "SELECT i.*, p.produto FROM item i, produto p WHERE i.id_pedido=:idPedido AND i.id_produto = p.id_produto ";
             $sql = $this->db->prepare($sql);
             $sql->bindValue(":idPedido", $idPedido);
             $sql->execute();
@@ -21,15 +21,18 @@ class Item extends Model {
     }
     
     
-    public function inserir($valores){
+    //public function inserir($valores){
+    public function inserir($valores, $conexao){
         $sql = "INSERT INTO item (id_pedido, id_produto, qtde, valor) VALUES(:id_pedido, :idProduto, :qtde, :valor)";
-        $qry = $this->db->prepare($sql);
-        $qry->bindValue(":id_pedido", $valores->id_pedido);
-        $qry->bindValue(":idProduto", $valores->id_produto);
+        //$qry = $this->db->prepare($sql);
+        $qry = $conexao->prepare($sql);
+        $qry->bindValue(":id_pedido", $valores->idPedido);
+        $qry->bindValue(":idProduto", $valores->idProduto);
         $qry->bindValue(":qtde", $valores->qtde);
         $qry->bindValue(":valor", $valores->preco);
         $qry->execute();
-        $resultado = $this->db->lastInsertId();
+        //$resultado = $this->db->lastInsertId();
+        $resultado = $conexao->lastInsertId();
         return $resultado;
     }
     

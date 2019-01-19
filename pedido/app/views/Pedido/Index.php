@@ -88,7 +88,7 @@
                                     <tr>
                                         <td><?php echo $i ?></td>
                                         <td><?php echo $item->id_produto ?></td>
-                                        <td><?php echo utf8_encode($item->produto) ?></td>
+                                        <td><?php echo $item->produto ?></td>
                                         <td>R$ <?php echo $item->valor ?></td>
                                         <td><input type="number" name="quant[<?php echo $item->id_produto ?>]"  class="p_quant" value="<?php echo $item->qtde ?>" data-preco="<?php echo $item->valor ?>" data-id-produto="<?php echo $item->id_produto ?>" onchange="atualizaSubtotal(this)" ></td>
                                         <td class="subtotal">R$ <?php echo $item->valor*$item->qtde ?></td>

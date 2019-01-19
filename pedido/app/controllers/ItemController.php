@@ -35,8 +35,8 @@ class ItemController extends Controller {
         }
 
         $valores = (object) array(
-                    "id_pedido" => $id_pedido,
-                    "id_produto" => $id_produto,
+                    "idPedido" => $id_pedido,
+                    "idProduto" => $id_produto,
                     "qtde" => $qtde,
                     "preco" => $preco
         );
